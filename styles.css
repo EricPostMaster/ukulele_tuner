@@ -2,10 +2,35 @@ body {
     font-family: Arial, sans-serif;
     text-align: center;
 }
+/* Default styles */
 #ukulele-image {
-    max-width: 30%;
+    max-width: 100%;
     height: auto;
+    display: block; /* Ensure image behaves correctly */
+    margin: 0 auto; /* Center the image */
 }
+
+/* Desktop styles */
+@media (min-width: 1024px) and (max-width: 2000px) {
+    #ukulele-image {
+        max-width: 30%; /* Set width for desktop */
+    }
+}
+
+/* Tablet styles */
+@media (min-width: 768px) and (max-width: 1023px) {
+    #ukulele-image {
+        max-width: 50%; /* Set medium width for tablets */
+    }
+}
+
+/* Mobile styles */
+@media (max-width: 767px) {
+    #ukulele-image {
+        width: 100%; /* Set full width for mobile */
+    }
+}
+
 #note-selector {
     margin-top: 20px;
 }
@@ -16,6 +41,7 @@ body {
     width: 200px;
     height: 30px;
     border: 1px solid #ccc;
+    border-radius: 10px;
     position: relative;
     margin: 0 auto;
 }
@@ -24,6 +50,7 @@ body {
     width: 200px;
     height: 30px;
     border: 1px solid #ccc;
+    border-radius: 10px;
     position: relative;
     margin: 0 auto;
     overflow: hidden; /* Ensure the needle stays inside the signal bar */
@@ -52,12 +79,12 @@ body {
 }
 
 #window-left {
-    left: 40%; /* Adjust the position of the left window boundary */
+    left: 45%; /* Adjust the position of the left window boundary */
     border-left: 1px dotted red; /* Style the left boundary as a red dotted line */
 }
 
 #window-right {
-    left: 60%; /* Adjust the position of the right window boundary */
+    left: 55%; /* Adjust the position of the right window boundary */
     border-right: 1px dotted red; /* Style the right boundary as a red dotted line */
 }
 
