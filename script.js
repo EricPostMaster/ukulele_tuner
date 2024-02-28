@@ -59,10 +59,10 @@ function updateTuner() {
     const currentFrequency = getCurrentFrequency();
 
     const difference = targetFrequency - currentFrequency;
-    const maxDifference = 200; // Adjust this value based on the sensitivity of your tuning
+    const maxDifference = 100; // Adjust this value based on the sensitivity of your tuning
     const normalizedDifference = difference / maxDifference;
 
-    signalBar.style.backgroundColor = normalizedDifference >= 0 ? '#000' : '#000';
+    signalBar.style.backgroundColor = normalizedDifference >= 0 ? '#fff' : '#fff';
 
     // Adjusting the width and position of the needle
     needle.style.left = `${50 - normalizedDifference * 50}%`;
