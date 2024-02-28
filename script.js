@@ -5,7 +5,7 @@ const frequencyDisplay = document.getElementById('frequency-display');
 const startButton = document.getElementById('start-button');
 
 const targetNotes = {
-    'G': 1000,// 392.00,
+    'G': 392.00,
     'C': 261.63,
     'E': 329.63,
     'A': 440.00
@@ -21,7 +21,7 @@ async function setupMicrophone() {
         microphoneStream = await navigator.mediaDevices.getUserMedia({ audio: true });
         const source = audioContext.createMediaStreamSource(microphoneStream);
         analyser = audioContext.createAnalyser();
-        analyser.fftSize = 2048;
+        analyser.fftSize = 8192; // Increase FFT size for higher frequency resolution
         source.connect(analyser);
         updateTuner();
     } catch (err) {
@@ -34,11 +34,28 @@ function getCurrentFrequency() {
     const dataArray = new Uint8Array(bufferLength);
     analyser.getByteFrequencyData(dataArray);
 
-    const peakIndex = getPeak(dataArray);
+    // Apply thresholding
+    const threshold = 150; // Adjust the threshold value as needed
+    const filteredDataArray = dataArray.map(value => value >= threshold ? value : 0);
+
+    const peakIndex = getPeak(filteredDataArray);
     const binWidth = audioContext.sampleRate / analyser.fftSize;
     const dominantFrequency = peakIndex * binWidth;
 
     return dominantFrequency;
+}
+
+function smooth(dataArray) {
+    const smoothedArray = [];
+    const smoothingFactor = 0.8; // Adjust the smoothing factor as needed
+    let lastValue = 0;
+
+    for (let i = 0; i < dataArray.length; i++) {
+        smoothedArray[i] = lastValue * smoothingFactor + dataArray[i] * (1 - smoothingFactor);
+        lastValue = smoothedArray[i];
+    }
+
+    return smoothedArray;
 }
 
 function getPeak(dataArray) {
@@ -52,6 +69,7 @@ function getPeak(dataArray) {
     }
     return maxIndex;
 }
+
 
 function updateTuner() {
     const selectedNote = noteSelector.value;
@@ -68,7 +86,7 @@ function updateTuner() {
     needle.style.left = `${50 - normalizedDifference * 50}%`;
 
     noteLabel.textContent = `Target Note: ${selectedNote}`;
-    frequencyDisplay.textContent = `Detected Frequency: ${currentFrequency.toFixed(2)} Hz`;
+    frequencyDisplay.textContent = `Detected Frequency: ${currentFrequency.toFixed(0)} Hz`;
 
     requestAnimationFrame(updateTuner);
 }
