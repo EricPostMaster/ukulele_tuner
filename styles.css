@@ -1,0 +1,73 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+#ukulele-image {
+    max-width: 100%;
+    height: auto;
+}
+#note-selector {
+    margin-top: 20px;
+}
+#tuner {
+    margin-top: 20px;
+}
+#signal {
+    width: 200px;
+    height: 30px;
+    border: 1px solid #ccc;
+    position: relative;
+    margin: 0 auto;
+}
+
+#signal-bar {
+    width: 200px;
+    height: 30px;
+    border: 1px solid #ccc;
+    position: relative;
+    margin: 0 auto;
+    overflow: hidden; /* Ensure the needle stays inside the signal bar */
+    position: relative; /* Necessary for positioning the needle */
+}
+
+#needle {
+    width: 2px; /* Adjust the width of the needle */
+    height: 100%; /* Match the height of the signal bar */
+    background-color: red; /* Color of the needle */
+    position: absolute; /* Position the needle within the signal bar */
+    top: 0; /* Align the needle with the top of the signal bar */
+    left: 50%; /* Initially center the needle */
+    transform: translateX(-50%); /* Center the needle horizontally */
+    z-index: 1; /* Ensure the needle is rendered above other elements */
+}
+
+#window-left,
+#window-right {
+    width: 2px;
+    height: 100%;
+    background-color: transparent;
+    position: absolute;
+    top: 0;
+    z-index: 2; /* Ensure the dotted lines are rendered above the signal bar */
+}
+
+#window-left {
+    left: 40%; /* Adjust the position of the left window boundary */
+    border-left: 1px dotted red; /* Style the left boundary as a red dotted line */
+}
+
+#window-right {
+    left: 60%; /* Adjust the position of the right window boundary */
+    border-right: 1px dotted red; /* Style the right boundary as a red dotted line */
+}
+
+
+
+#note-label {
+    margin-top: 10px;
+    font-size: 24px;
+}
+#frequency-display {
+    margin-top: 20px;
+    font-size: 18px;
+}
